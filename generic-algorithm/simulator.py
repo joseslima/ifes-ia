@@ -99,44 +99,24 @@ class Simulator:
       binary_string = "".join(str(e) for e in binary_array)
       return int(binary_string, 2)
 
-    def print_population(self, population):
-      i = 0
-      for p in population:
-        print("----------------------------------------------------------")
-        print("| {:02d} | Apt: {} | Gene: {}".format(i, p.fitnessValue, p.geneValue))
-        i += 1
-
-    def print_phase_result(self, n, phase, population):
-      print("================ [ FASE {}: {} ] ==================".format(n, phase))
-      print_population(population)
-      print("")
-
-    def print_best_subject(self, population, generation):
-      min = inf
-      best_subject = None
-
-      for subject in population:
-          if subject.fitnessValue <= min:
-              best_subject = subject
-              min = subject.fitnessValue
-
-      print("================ [ Melhor da geracao: {} ] ================".format(generation))
-      print("| Apt: {} | Gene: {}".format(best_subject.fitnessValue, best_subject.geneValue))
-      print("")
-
     def start(self):
-      gen = 1
+      self.interaction = 0
 
       for i in range(self.populationSize):
         self.population.append(Subject(bits=self.bits, interval=self.interval, mutateRate=self.mutateRate ))
-
+      
       for interaction in range(self.interactions):
+        self.interaction = interaction + 1
         self.tournamentStage()
         self.crossoverStage()
         self.mutationStage()
         self.elitismStage()
-        print(gen)
-        self.print_best_subject(self.population, gen)
+        
+        print("Melhor da geração: {}".format(self.interactions))
+        print("Aptidão:{}".format(self.best.fitnessValue))
+        print("Gene:{}".format(self.best.geneValue))
+        print("")
 
-        gen += 1
+      return self.best
+
       #return

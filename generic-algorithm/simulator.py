@@ -106,13 +106,12 @@ class Simulator:
         self.population.append(Subject(bits=self.bits, interval=self.interval, mutateRate=self.mutateRate ))
       
       for interaction in range(self.interactions):
-        self.interaction = interaction + 1
         self.tournamentStage()
         self.crossoverStage()
         self.mutationStage()
         self.elitismStage()
         
-        print("Melhor da geração: {}".format(self.interactions))
+        print("Melhor da geração: {}".format(interaction + 1))
         print("Aptidão:{}".format(self.best.fitnessValue))
         print("Gene:{}".format(self.best.geneValue))
         print("")
